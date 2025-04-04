@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { FaEllipsisV } from "react-icons/fa"
-import { deleteTask, toggleTaskStatus } from "../features/tasks/tasksSlice"
+import { deleteTask, markAsCompleted } from "../features/tasks/tasksSlice"
 import { useDispatch } from "react-redux"
 
 const Task = ({ id, title, desc, status, dueDate, createdAt, updatedAt }) => {
@@ -25,7 +25,9 @@ const Task = ({ id, title, desc, status, dueDate, createdAt, updatedAt }) => {
             setMenuOpen(false)
         }
         if (e.target.textContent === "Mark as complete") {
-            dispatch(toggleTaskStatus(id))
+            if (status === "pending") {
+                dispatch(markAsCompleted(id))
+            }
             setMenuOpen(false)
         }
     }

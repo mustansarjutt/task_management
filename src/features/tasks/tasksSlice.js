@@ -52,11 +52,19 @@ const taskSlice = createSlice({
                 localStorage.setItem("tasks", JSON.stringify(state.tasks))
             }
         },
-        toggleTaskStatus: (state, action) => {
+        markAsCompleted: (state, action) => {
             const index = state.tasks.findIndex((task) => task.id === action.payload)
 
             if (index !== -1) {
-                state.tasks[index].status = state.tasks[index].status === "pending" ? "completed" : "pending"
+                state.tasks[index].status = "completed"
+                localStorage.setItem("tasks", JSON.stringify(state.tasks))
+            }
+        },
+        markAsPending: (state, action) => {
+            const index = state.tasks.findIndex((task) => task.id === action.payload)
+
+            if (index !== -1) {
+                state.tasks[index].status = "pending"
                 localStorage.setItem("tasks", JSON.stringify(state.tasks))
             }
         },
@@ -80,7 +88,7 @@ const taskSlice = createSlice({
 })
 
 const taskReducer = taskSlice.reducer
-const { addTask, deleteTask, updateTask,clearCompletedTasks, toggleTaskStatus, searchTasks, filterTasks, clearAllTasks } = taskSlice.actions
+const { addTask, deleteTask, updateTask,clearCompletedTasks, markAsCompleted, markAsPending, searchTasks, filterTasks, clearAllTasks } = taskSlice.actions
 
 export {
     taskReducer,
@@ -88,7 +96,8 @@ export {
     deleteTask,
     updateTask,
     clearCompletedTasks,
-    toggleTaskStatus,
+    markAsCompleted,
+    markAsPending,
     searchTasks,
     filterTasks,
     clearAllTasks
